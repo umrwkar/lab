@@ -163,7 +163,7 @@
       /* Albums are loaded from data/albums.json (edit them in Pages CMS). */
       let ALBUMS = [];
       function slug(t){return String(t||'album').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
-      function normSrc(p){p=String(p||'');return p.replace(/^\//,'');}
+      function normSrc(p){p=String(p||'').replace(/^\//,'');try{p=decodeURI(p);}catch(e){}return encodeURI(p);}
 
       const app = document.getElementById("app");
       const GAP = 12;
