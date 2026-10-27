@@ -1,0 +1,26 @@
+media:
+  input: images
+  output: images
+content:
+  - name: albums
+    label: Albums
+    type: file
+    path: data/albums.json
+    format: json
+    fields:
+      - name: albums
+        label: Albums
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: Album title
+            type: string
+            required: true
+          - name: subtitle
+            label: Subtitle (brand / category)
+            type: string
+          - name: images
+            label: Pictures (first one is the cover)
+            type: image
+            list: true
