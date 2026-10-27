@@ -1,32 +1,6 @@
 {
   "albums": [
     {
-      "title": "Emerald Silk",
-      "subtitle": "Evening Campaign · Luxury Couture",
-      "images": [
-        "images/a1-2.jpg",
-        "images/a1-3.jpg"
-      ]
-    },
-    {
-      "title": "Desert Linen",
-      "subtitle": "Resort Wear Editorial",
-      "images": [
-        "images/a2-1.jpg",
-        "images/a2-2.jpg",
-        "images/a2-3.jpg"
-      ]
-    },
-    {
-      "title": "Quiet Luxury",
-      "subtitle": "Studio Lookbook",
-      "images": [
-        "images/a3-1.jpg",
-        "images/a3-2.jpg",
-        "images/a3-3.jpg"
-      ]
-    },
-    {
       "title": "Umer",
       "subtitle": "02",
       "images": [
