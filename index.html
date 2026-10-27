@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Umro Portfolio Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400&display=swap" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      html { color-scheme: dark; }
+      html, body { margin: 0; padding: 0; background: #0b0b0b; color: #f2f2f2; }
+      body {
+        font-family: "Jost", -apple-system, "Helvetica Neue", Arial, sans-serif;
+        font-weight: 300; font-size: 14px; line-height: 1.7; letter-spacing: .02em;
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: inherit; text-decoration: none; }
+      img { display: block; }
+      [hidden] { display: none !important; }
+
+      .x-header {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 44px 48px 40px; max-width: 1600px; margin: 0 auto;
+      }
+      .x-mark { display: inline-flex; align-items: center; min-height: 44px; padding: 0 4px 0 0; font-size: 15px; font-weight: 400; letter-spacing: .42em; text-transform: uppercase; }
+      .x-nav { display: flex; gap: 32px; }
+      .x-nav a {
+        font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: #a8a8a8;
+        transition: color .3s ease; padding: 0 2px; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 48px;
+      }
+      .x-nav a:hover, .x-nav a[aria-current="page"] { color: #f2f2f2; }
+
+      main { max-width: 1600px; margin: 0 auto; padding: 0 48px; min-height: 60vh; }
+      .x-view { animation: x-fade .6s ease both; }
+      @keyframes x-fade { from { opacity: 0; } to { opacity: 1; } }
+
+      /* Masonry grid of covers */
+      .x-grid { column-count: 3; column-gap: 12px; }
+      .x-cover {
+        position: relative; display: block; break-inside: avoid; margin: 0 0 12px;
+        overflow: hidden; cursor: pointer; background: #161616;
+      }
+      .x-cover img { width: 100%; height: auto; }
+      .x-cover__info {
+        position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; text-align: center;
+        background: rgba(11,11,11,.82); opacity: 0; transition: opacity .45s ease;
+      }
+      .x-cover:hover .x-cover__info, .x-cover:focus-visible .x-cover__info { opacity: 1; }
+      .x-cover__title { font-size: 13px; letter-spacing: .28em; text-transform: uppercase; font-weight: 400; }
+      .x-cover__count { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #a8a8a8; margin-top: 4px; }
+      .x-cover:focus-visible { outline: 1px solid #f2f2f2; outline-offset: 3px; }
+      @media (hover: none) {
+        .x-cover__info { position: static; opacity: 1; background: #0b0b0b; padding: 14px 0 10px; }
+        .x-cover { background: #0b0b0b; }
+      }
+
+      /* Fade-in for images */
+      .x-img { opacity: 0; transition: opacity .8s ease; }
+      .x-img.is-loaded { opacity: 1; }
+
+      /* Album view */
+      .x-album-head { text-align: center; padding: 12px 0 48px; }
+      .x-album-head h1 {
+        margin: 0; font-size: 22px; font-weight: 300; letter-spacing: .32em; text-transform: uppercase;
+      }
+      .x-album-head p { margin: 8px 0 0; font-size: 12px; color: #a8a8a8; letter-spacing: .14em; text-transform: uppercase; }
+      .x-back {
+        display: inline-block; margin-top: 22px; padding: 10px 0;
+        font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: #a8a8a8; transition: color .3s ease;
+      }
+      .x-back:hover { color: #f2f2f2; }
+      .x-just { position: relative; }
+      .x-row { display: flex; gap: 12px; margin-bottom: 12px; justify-content: center; }
+      .x-tile { flex: none; cursor: zoom-in; background: #161616; overflow: hidden; border: 0; padding: 0; }
+      .x-tile img { width: 100%; height: 100%; object-fit: contain; }
+      .x-tile:focus-visible { outline: 1px solid #f2f2f2; outline-offset: 3px; }
+
+      /* Contact */
+      .x-contact { max-width: 520px; margin: 0 auto; text-align: center; padding: 60px 0 40px; }
+      .x-contact h1 { margin: 0 0 28px; font-size: 22px; font-weight: 300; letter-spacing: .32em; text-transform: uppercase; }
+      .x-contact p { margin: 0 0 32px; font-size: 16px; line-height: 1.8; }
+      .x-contact dl { margin: 0; font-size: 13px; }
+      .x-contact dt { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: #a8a8a8; margin-top: 20px; }
+      .x-contact dd { margin: 4px 0 0; }
+      .x-contact dd a { border-bottom: 1px solid #333; transition: border-color .3s ease; }
+      .x-contact dd a:hover { border-color: #f2f2f2; }
+
+      /* Footer */
+      .x-footer { text-align: center; padding: 80px 24px 48px; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: #a8a8a8; }
+      .x-social { display: flex; justify-content: center; gap: 28px; margin-bottom: 14px; }
+      .x-social a { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; padding: 0 2px; transition: color .3s ease; }
+      .x-social a:hover { color: #f2f2f2; }
+
+      /* Lightbox */
+      .x-lb {
+        position: fixed; inset: 0; z-index: 50; background: #000;
+        display: flex; align-items: center; justify-content: center;
+        opacity: 0; visibility: hidden; transition: opacity .4s ease, visibility .4s;
+      }
+      .x-lb.is-open { opacity: 1; visibility: visible; }
+      .x-lb__stage { position: absolute; inset: 72px 88px; display: flex; align-items: center; justify-content: center; }
+      .x-lb__stage img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+      .x-lb button {
+        position: absolute; background: none; border: 0; cursor: pointer; color: #fff;
+        font: inherit; min-width: 44px; min-height: 44px; opacity: .6; transition: opacity .3s ease;
+      }
+      .x-lb button:hover, .x-lb button:focus-visible { opacity: 1; }
+      .x-lb__close { top: 18px; right: 22px; font-size: 26px; line-height: 1; }
+      .x-lb__prev, .x-lb__next { top: 50%; transform: translateY(-50%); font-size: 28px; padding: 20px; }
+      .x-lb__prev { left: 16px; }
+      .x-lb__next { right: 16px; }
+      .x-lb__count { position: absolute; top: 28px; left: 0; right: 0; text-align: center; font-size: 12px; letter-spacing: .24em; color: #fff; pointer-events: none; }
+
+      @media (max-width: 1024px) {
+        .x-grid { column-count: 2; }
+        .x-header { padding: 36px 32px 32px; }
+        main { padding: 0 32px; }
+      }
+      @media (max-width: 640px) {
+        .x-grid { column-count: 1; }
+        .x-header { padding: 28px 20px 24px; }
+        main { padding: 0 20px; }
+        .x-lb__stage { inset: 64px 12px; }
+        .x-lb__prev, .x-lb__next { top: auto; bottom: 8px; transform: none; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .x-view, .x-img, .x-lb, .x-cover__info { animation: none; transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="x-header">
+      <a class="x-mark" href="#/">Umro</a>
+      <nav class="x-nav" aria-label="Main">
+        <a href="#/" data-route="work">Work</a>
+        <a href="#/contact" data-route="contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="app" aria-live="polite"></main>
+
+    <footer class="x-footer">
+      <div class="x-social">
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.linkedin.com/in/umro/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.behance.net/" target="_blank" rel="noopener">Behance</a>
+      </div>
+      <div>© 2026 UMRO</div>
+    </footer>
+
+    <div class="x-lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+      <p class="x-lb__count" id="lb-count"></p>
+      <button class="x-lb__close" id="lb-close" aria-label="Close">&times;</button>
+      <button class="x-lb__prev" id="lb-prev" aria-label="Previous image">&larr;</button>
+      <div class="x-lb__stage" id="lb-stage"></div>
+      <button class="x-lb__next" id="lb-next" aria-label="Next image">&rarr;</button>
+    </div>
+
+    <script>
+      /* Albums are loaded from data/albums.json (edit them in Pages CMS). */
+      let ALBUMS = [];
+      function slug(t){return String(t||'album').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+      function normSrc(p){p=String(p||'');return p.replace(/^\//,'');}
+
+      const app = document.getElementById("app");
+      const GAP = 12;
+
+      // Clone a packaged image by file name; fade in once loaded; fill in missing w/h.
+      function makeImg(file, info, onSize) {
+        const img = document.createElement("img");
+        img.src = normSrc(file); img.loading = "lazy"; img.alt = "";
+        img.classList.add("x-img");
+        const done = () => {
+          img.classList.add("is-loaded");
+          if (info && (!info.w || !info.h) && img.naturalWidth) {
+            info.w = img.naturalWidth; info.h = img.naturalHeight;
+            if (onSize) onSize();
+          }
+        };
+        if (img.complete && img.naturalWidth) requestAnimationFrame(done);
+        else { img.addEventListener("load", done); img.addEventListener("error", () => img.classList.add("is-loaded")); }
+        return img;
+      }
+
+      function setNav(route) {
+        document.querySelectorAll(".x-nav a").forEach((a) => {
+          if (a.dataset.route === route) a.setAttribute("aria-current", "page");
+          else a.removeAttribute("aria-current");
+        });
+      }
+
+      function view(html) {
+        app.innerHTML = "";
+        const v = document.createElement("div");
+        v.className = "x-view";
+        if (html) v.innerHTML = html;
+        app.appendChild(v);
+        return v;
+      }
+
+      /* ---------- Work ---------- */
+      function renderWork() {
+        setNav("work");
+        document.title = "UMRO — Work";
+        const v = view();
+        const grid = document.createElement("div");
+        grid.className = "x-grid";
+        ALBUMS.forEach((al) => {
+          const coverFile = al.cover || al.images[0].src;
+          const info = al.images.find((i) => i.src === coverFile) || {};
+          const a = document.createElement("a");
+          a.className = "x-cover";
+          a.href = "#/album/" + al.id;
+          a.setAttribute("aria-label", al.title + ", " + al.images.length + " images");
+          const img = makeImg(coverFile, info);
+          img.alt = al.title + " album cover";
+          if (info.w && info.h) { img.width = info.w; img.height = info.h; }
+          a.appendChild(img);
+          const n = al.images.length;
+          a.insertAdjacentHTML("beforeend",
+            '<span class="x-cover__info"><span class="x-cover__title"></span><span class="x-cover__count">' +
+            n + (n === 1 ? " image" : " images") + "</span></span>");
+          a.querySelector(".x-cover__title").textContent = al.title;
+          grid.appendChild(a);
+        });
+        v.appendChild(grid);
+      }
+
+      /* ---------- Album (justified rows) ---------- */
+      let current = null; // { album, container }
+
+      function layoutJustified() {
+        if (!current) return;
+        const { album, container, tiles } = current;
+        const W = container.clientWidth;
+        if (!W) return;
+        const target = window.innerWidth <= 640 ? 260 : window.innerWidth <= 1024 ? 340 : 420;
+        const ratio = (im) => (im.w && im.h ? im.w / im.h : 1);
+        container.innerHTML = "";
+        let row = [], sum = 0;
+        const flush = (last) => {
+          if (!row.length) return;
+          const gaps = GAP * (row.length - 1);
+          let h = (W - gaps) / sum;
+          if (last) h = Math.min(target, h);
+          const r = document.createElement("div");
+          r.className = "x-row";
+          row.forEach((i) => {
+            const t = tiles[i];
+            t.style.height = Math.floor(h) + "px";
+            t.style.width = Math.floor(h * ratio(album.images[i])) + "px";
+            r.appendChild(t);
+          });
+          container.appendChild(r);
+          row = []; sum = 0;
+        };
+        album.images.forEach((im, i) => {
+          row.push(i); sum += ratio(im);
+          if (sum * target + GAP * (row.length - 1) >= W) flush(false);
+        });
+        flush(true);
+      }
+
+      function renderAlbum(id) {
+        const album = ALBUMS.find((a) => a.id === id);
+        if (!album) { location.hash = "#/"; return; }
+        setNav("work");
+        document.title = "UMRO — " + album.title;
+        const v = view(
+          '<div class="x-album-head"><h1></h1><p></p><a class="x-back" href="#/">← Back to Work</a></div><div class="x-just"></div>'
+        );
+        v.querySelector("h1").textContent = album.title;
+        v.querySelector(".x-album-head p").textContent = album.subtitle;
+        const container = v.querySelector(".x-just");
+        const tiles = album.images.map((im, i) => {
+          const b = document.createElement("button");
+          b.className = "x-tile";
+          b.type = "button";
+          b.setAttribute("aria-label", "Open image " + (i + 1) + " of " + album.images.length);
+          const img = makeImg(im.src, im, layoutJustified);
+          img.alt = album.title + ", image " + (i + 1);
+          b.appendChild(img);
+          b.addEventListener("click", () => openLightbox(album, i));
+          return b;
+        });
+        current = { album, container, tiles };
+        layoutJustified();
+      }
+
+      /* ---------- Contact ---------- */
+      function renderContact() {
+        setNav("contact");
+        document.title = "UMRO — Contact";
+        view(
+          '<div class="x-contact"><h1>Contact</h1>' +
+          "<p>Hyper-realistic AI fashion photography and campaigns for premium and luxury apparel brands.</p>" +
+          "<dl><dt>Umer Waqar</dt><dd>AI Fashion Photography &amp; Creative Direction</dd>" +
+          '<dt>Email</dt><dd><a href="mailto:mirwaqar09@gmail.com">mirwaqar09@gmail.com</a></dd>' +
+          '<dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/umro/" target="_blank" rel="noopener">linkedin.com/in/umro</a></dd></dl></div>'
+        );
+      }
+
+      /* ---------- Lightbox ---------- */
+      const lb = document.getElementById("lightbox");
+      const stage = document.getElementById("lb-stage");
+      const counter = document.getElementById("lb-count");
+      let lbAlbum = null, lbIndex = 0, lastFocus = null;
+
+      function showLb() {
+        const im = lbAlbum.images[lbIndex];
+        stage.innerHTML = "";
+        const img = makeImg(im.src, im);
+        img.removeAttribute("loading");
+        img.alt = lbAlbum.title + ", image " + (lbIndex + 1);
+        stage.appendChild(img);
+        counter.textContent = lbIndex + 1 + " / " + lbAlbum.images.length;
+      }
+      function openLightbox(album, i) {
+        lbAlbum = album; lbIndex = i; lastFocus = document.activeElement;
+        showLb();
+        clearTimeout(lbHideTimer);
+        lb.hidden = false;
+        void lb.offsetWidth;
+        lb.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+        document.getElementById("lb-close").focus();
+      }
+      let lbHideTimer;
+      function closeLightbox() {
+        if (!lb.classList.contains("is-open")) return;
+        lb.classList.remove("is-open");
+        lbHideTimer = setTimeout(() => { lb.hidden = true; }, 400);
+        document.body.style.overflow = "";
+        if (lastFocus) lastFocus.focus();
+      }
+      function step(d) {
+        if (!lbAlbum) return;
+        const n = lbAlbum.images.length;
+        lbIndex = (lbIndex + d + n) % n;
+        showLb();
+      }
+      document.getElementById("lb-close").addEventListener("click", closeLightbox);
+      document.getElementById("lb-prev").addEventListener("click", () => step(-1));
+      document.getElementById("lb-next").addEventListener("click", () => step(1));
+      lb.addEventListener("click", (e) => { if (e.target === lb || e.target === stage) closeLightbox(); });
+      document.addEventListener("keydown", (e) => {
+        if (!lb.classList.contains("is-open")) return;
+        if (e.key === "ArrowLeft") step(-1);
+        else if (e.key === "ArrowRight") step(1);
+        else if (e.key === "Escape") closeLightbox();
+      });
+      let tx = null, ty = null;
+      lb.addEventListener("touchstart", (e) => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+      lb.addEventListener("touchend", (e) => {
+        if (tx === null) return;
+        const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1);
+        tx = ty = null;
+      });
+
+      /* ---------- Router ---------- */
+      function route() {
+        closeLightbox();
+        current = null;
+        const h = location.hash.replace(/^#\/?/, "");
+        const parts = h.split("/");
+        if (parts[0] === "album" && parts[1]) renderAlbum(decodeURIComponent(parts[1]));
+        else if (parts[0] === "contact") renderContact();
+        else renderWork();
+        window.scrollTo(0, 0);
+      }
+      window.addEventListener("hashchange", route);
+      let rt;
+      window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(layoutJustified, 120); });
+      fetch("data/albums.json?v=" + Date.now())
+        .then((r) => r.json())
+        .then((d) => {
+          const list = Array.isArray(d) ? d : (d.albums || []);
+          const used = {};
+          ALBUMS = list.filter((a) => a && a.images && a.images.length).map((a) => {
+            let id = slug(a.title); while (used[id]) id += "-2"; used[id] = 1;
+            const imgs = a.images.map((p) => ({ src: normSrc(typeof p === "string" ? p : p.image || p.src), w: 0, h: 0 }));
+            return { id, title: a.title || "Untitled", subtitle: a.subtitle || "", cover: imgs[0].src, images: imgs };
+          });
+          route();
+        })
+        .catch(() => { ALBUMS = []; route(); });
+    </script>
+  </body>
+</html>
