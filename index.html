@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Umro Portfolio Demo</title>
+    <title>Umer Waqar Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400&display=swap" />
@@ -205,7 +205,7 @@
       /* ---------- Work ---------- */
       function renderWork() {
         setNav("work");
-        document.title = "UMRO — Work";
+        document.title = "Umer Waqar Portfolio";
         const v = view();
         const grid = document.createElement("div");
         grid.className = "x-grid";
@@ -269,7 +269,7 @@
         const album = ALBUMS.find((a) => a.id === id);
         if (!album) { location.hash = "#/"; return; }
         setNav("work");
-        document.title = "UMRO — " + album.title;
+        document.title = album.title + " — Umer Waqar Portfolio";
         const v = view(
           '<div class="x-album-head"><h1></h1><p></p><a class="x-back" href="#/">← Back to Work</a></div><div class="x-just"></div>'
         );
@@ -294,7 +294,7 @@
       /* ---------- Contact ---------- */
       function renderContact() {
         setNav("contact");
-        document.title = "UMRO — Contact";
+        document.title = "Contact — Umer Waqar Portfolio";
         view(
           '<div class="x-contact"><h1>Contact</h1>' +
           "<p>Hyper-realistic AI fashion photography and campaigns for premium and luxury apparel brands.</p>" +
